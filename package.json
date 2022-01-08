@@ -9,7 +9,7 @@
     "compile": "tsc"
   },
   "repository": {
-    "url": ""
+    "url": "https://github.com/gustav144/express-rate-limit-ioredis-store"
   },
   "license": "MIT",
   "private": false,
