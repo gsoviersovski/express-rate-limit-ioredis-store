@@ -25,10 +25,11 @@ export default class ExpressRateLimitIORedisStore implements Store {
     const redisKey = this.getFullKey(key);
     const totalHits = await this.client.incr(redisKey);
     const insertionTime = await this.getInsertionTime(redisKey, totalHits);
-
+    const expiryTime = insertionTime + this.windowMs;
+    await this.client.pexpireat(redisKey, expiryTime);
     return {
       totalHits,
-      resetTime: new Date(insertionTime + this.windowMs),
+      resetTime: new Date(expiryTime),
     };
   }
 
@@ -52,6 +53,7 @@ export default class ExpressRateLimitIORedisStore implements Store {
     if (isKeyInsertion) {
       const now = new Date().getTime();
       await this.client.set(key + '-create-time', now);
+      await this.client.pexpire(key + '-create-time', this.windowMs);
       return now;
     }
     const createTime = await this.client.get(key + '-create-time');
