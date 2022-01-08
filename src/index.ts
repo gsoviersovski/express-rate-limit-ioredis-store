@@ -1,8 +1,8 @@
 import {IncrementResponse, Options, Store} from 'express-rate-limit';
 import Redis from 'ioredis';
 
-type ConstructorParam = {
-  globalPrefix: string;
+type RedisStoreOptions = {
+  globalPrefix?: string;
   client: Redis.Redis;
 };
 
@@ -11,9 +11,9 @@ export default class ExpressRateLimitIORedisStore implements Store {
   private globalPrefix: string;
   private windowMs: number;
 
-  constructor({globalPrefix, client}: ConstructorParam) {
+  constructor({globalPrefix, client}: RedisStoreOptions) {
     this.client = client;
-    this.globalPrefix = globalPrefix;
+    this.globalPrefix = globalPrefix ?? 'express-rate-limit-store-';
     this.windowMs = 0;
   }
 
@@ -22,8 +22,7 @@ export default class ExpressRateLimitIORedisStore implements Store {
   }
 
   async increment(key: string): Promise<IncrementResponse> {
-    let redisKey = this.getFullKey(key);
-
+    const redisKey = this.getFullKey(key);
     const totalHits = await this.client.incr(redisKey);
     const insertionTime = await this.getInsertionTime(redisKey, totalHits);
 
@@ -34,7 +33,10 @@ export default class ExpressRateLimitIORedisStore implements Store {
   }
 
   async decrement(key: string): Promise<void> {
-    await this.client.decr(this.getFullKey(key));
+    const redisKey = this.getFullKey(key);
+    if (await this.client.get(redisKey)) {
+      await this.client.decr(redisKey);
+    }
   }
 
   async resetKey(key: string): Promise<void> {

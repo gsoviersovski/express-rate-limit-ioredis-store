@@ -1,8 +1,6 @@
 {
   "extends": ["./node_modules/gts/"],
-  "plugins": ["istanbul", "consistent-default-export-name"],
   "rules": {
-    "istanbul/prefer-ignore-reason": "error",
     "@typescript-eslint/no-unused-vars": [
       "warn",
       {
@@ -14,21 +12,17 @@
     "max-lines-per-function": ["error", 30],
     "max-params": ["error", 3],
     "max-lines": ["error", 300],
-    "consistent-default-export-name/default-export-match-filename": "error",
-    "consistent-default-export-name/default-import-match-filename": "error",
     "no-warning-comments": ["error", {"terms": ["todo", "fixme"]}]
   },
   "overrides": [
     {
-      "files": ["src/index.ts"],
+      "files": ["src/**/*.ts"],
       "rules": {
-        "consistent-default-export-name/default-export-match-filename": "off"
-      }
-    },
-    {
-      "files": ["src/auth/refreshErrorHandler.ts"],
-      "rules": {
-        "max-params": "off"
+        "node/no-unpublished-import": ["error", {"allowModules": ["ioredis"]}],
+        "node/no-extraneous-import": [
+          "error",
+          {"allowModules": ["express-rate-limit"]}
+        ]
       }
     },
     {
@@ -39,17 +33,15 @@
           {
             "allowModules": [
               "chai",
-              "chai-string",
-              "chai-http",
-              "faker",
-              "deep-equal-in-any-order",
-              "sinon-chai",
-              "sinon",
-              "chai-as-promised"
+              "ioredis",
+              "timekeeper"
             ]
           }
         ],
-        "@typescript-eslint/no-explicit-any": "off"
+        "node/no-extraneous-import": [
+          "error",
+          {"allowModules": ["express-rate-limit"]}
+        ]
       }
     }
   ],
