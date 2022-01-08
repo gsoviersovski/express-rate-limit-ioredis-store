@@ -1,6 +1,6 @@
 {
   "name": "express-rate-limit-ioredis-store",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A redis store implementation to be used alongside ioredis for the express-rate-limit middleware",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
@@ -17,6 +17,13 @@
   "repository": {
     "url": "https://github.com/gustav144/express-rate-limit-ioredis-store"
   },
+  "keywords": [
+    "redis",
+    "ioredis",
+    "express-rate-limit",
+    "express",
+    "store"
+  ],
   "license": "MIT",
   "private": false,
   "dependencies": {},
