@@ -1,6 +1,6 @@
 {
   "name": "express-rate-limit-ioredis-store",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A redis store implementation to be used alongside ioredis for the express-rate-limit middleware",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
