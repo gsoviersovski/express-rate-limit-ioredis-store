@@ -19,7 +19,7 @@ $ yarn add express-rate-limit-ioredis-store
 const ExpressRateLimit = require("express-rate-limit");
 const RedisStore = require("express-rate-limit-ioredis-store");
 
-const limiter = new ExpressRateLimit({
+const limiter = ExpressRateLimit({
   store: new RedisStore({
     // check Options
   }),
@@ -34,7 +34,7 @@ Or with ES modules
 import ExpressRateLimit from 'express-rate-limit';
 import RedisStore from 'express-rate-limit-ioredis-store';
 
-const limiter = new ExpressRateLimit({
+const limiter = ExpressRateLimit({
   store: new RedisStore({
     // check Options
   }),
