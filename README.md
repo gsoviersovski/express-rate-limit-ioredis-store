@@ -52,4 +52,4 @@ app.use(limiter);
 
 ## Licence
 
-MIT (c) 2022 Gustavo Soviersovski
+MIT © 2022 Gustavo Soviersovski
